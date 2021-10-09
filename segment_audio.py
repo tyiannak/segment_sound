@@ -1,7 +1,8 @@
 import argparse
 from pyAudioAnalysis import audioBasicIO as aIO
 from pyAudioAnalysis import audioSegmentation as aS
-
+import scipy.io.wavfile as wavfile
+import os
 
 def parse_arguments():
     segment = argparse.ArgumentParser(description="Audio segment")
@@ -27,3 +28,6 @@ if __name__ == "__main__":
                               weight=t, plot=True)
     for s in segs:
         print(s)
+        name = f'{os.path.basename(input).replace(".wav", "")}_{s[0]}_{s[1]}.wav'
+        wavfile.write(name, fs,
+                      x[int(fs * s[0]):int(fs * s[1])])
