@@ -15,6 +15,7 @@ def parse_arguments():
                               "the fewer the segments that survive in the "
                               "final segmentation")
     segment.add_argument("-i", "--input", help="Input WAV file")
+    segment.add_argument("-o", "--output", help="Output folder")
     return segment.parse_args()
 
 
@@ -23,11 +24,22 @@ if __name__ == "__main__":
     input = args.input
     t = args.threshold
     s = args.smooth
+    o = args.output
+
+    # If folder doesn't exist, then create it.
+    if not os.path.isdir(o):
+        os.makedirs(o)
+        print("Created output folder : ", o)
+
+    else:
+        print(o, "Output folder already exists.")
+
     fs, x = aIO.read_audio_file(input)
     segs = aS.silence_removal(x, fs, 0.04, 0.02, smooth_window=s,
                               weight=t, plot=True)
     for s in segs:
         print(s)
-        name = f'{os.path.basename(input).replace(".wav", "")}_{s[0]}_{s[1]}.wav'
+        name = os.path.join(o,
+                            f'{os.path.basename(input).replace(".wav", "")}_{s[0]}_{s[1]}.wav')
         wavfile.write(name, fs,
                       x[int(fs * s[0]):int(fs * s[1])])
