@@ -4,6 +4,7 @@ from pyAudioAnalysis import audioSegmentation as aS
 import scipy.io.wavfile as wavfile
 import os
 
+
 def parse_arguments():
     segment = argparse.ArgumentParser(description="Audio segment")
     segment.add_argument("-s", "--smooth", type=float, default=0.1,
@@ -39,7 +40,6 @@ if __name__ == "__main__":
                               weight=t, plot=True)
     for s in segs:
         print(s)
-        name = os.path.join(o,
-                            f'{os.path.basename(input).replace(".wav", "")}_{s[0]}_{s[1]}.wav')
-        wavfile.write(name, fs,
-                      x[int(fs * s[0]):int(fs * s[1])])
+        name = f'{os.path.basename(input).replace(".wav", "")}_{s[0]}_{s[1]}.wav'
+        full_name = os.path.join(o, name)
+        wavfile.write(full_name, fs, x[int(fs * s[0]):int(fs * s[1])])
