@@ -1,5 +1,4 @@
-# segment_sound: A Python script to break an audio signal into audio segments 
-using silence removal
+# segment_sound: A Python script to break an audio signal into audio segments using silence removal
 
 `segment_sound` is a basic script to split a WAV file into segments
 based on the existence of pauses between the corresponding segments. 
@@ -31,3 +30,6 @@ obama_speech_1_4.0200000000000005_5.2.wav
 obama_speech_1_6.5600000000000005_9.9.wav
 ```
 
+You obviously need to experiment with the two parameters depending on the 
+level of background noise and on rate of the audio events (e.g. faster speech
+may require smaller smoothing window).
